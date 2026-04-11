@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guayaba Bit — Inicio</title>
+    <link rel="icon" href="../../assets/favicon.ico" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: { DEFAULT: "#2563eb", dark: "#1d4ed8" },
+            },
+          },
+        },
+      };
+    </script>
+    <!-- Tabler Icons webfont — https://tabler.io/icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.26.0/dist/tabler-icons.min.css"
+    />
+  </head>
+  <body class="min-h-screen flex flex-col bg-slate-50 font-sans">
+    <header class="bg-slate-900 text-white shrink-0">
+      <div
+        class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3"
+      >
+        <a href="home.html" class="text-lg font-bold text-white tracking-tight"
+          >Guayaba Bit</a
+        >
+        <nav class="flex flex-wrap items-center gap-1" aria-label="Principal">
+          <a
+            href="home.html"
+            class="px-3 py-2 rounded-md text-sm font-medium bg-slate-800 text-white"
+            aria-current="page"
+            >Inicio</a
+          >
+          <a
+            href="services/index.html"
+            class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+            >Servicios</a
+          >
+          <a
+            href="favorites.html"
+            class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+            >Favoritos</a
+          >
+          <a
+            href="#acerca"
+            class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+            >Acerca de</a
+          >
+          <a
+            href="contact.html"
+            class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+            >Contacto</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <section class="bg-white text-slate-900">
+        <div
+          class="max-w-3xl mx-auto px-4 py-16 md:py-20 text-center space-y-5"
+        >
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+            Bienvenido a Guayaba Bit
+          </h1>
+          <p class="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Ofrecemos los mejores servicios para satisfacer tus necesidades.
+          </p>
+          <div class="pt-2">
+            <a
+              href="services/index.html"
+              class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-md bg-blue-500 text-white font-semibold shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              <i
+                class="ti ti-arrow-right text-xl leading-none shrink-0"
+                aria-hidden="true"
+              ></i>
+              Ver todos los servicios
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="max-w-6xl mx-auto px-4 py-14 md:py-16">
+        <h2
+          class="text-2xl md:text-3xl font-bold text-slate-900 text-center mb-10"
+        >
+          Nuestros Servicios Destacados
+        </h2>
+        <div
+          id="featured-grid"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        ></div>
+      </section>
+
+      <section
+        id="acerca"
+        class="border-t border-slate-200 bg-slate-50 scroll-mt-20"
+      >
+        <div class="max-w-3xl mx-auto px-4 py-14 text-center space-y-3">
+          <h2 class="text-2xl font-bold text-slate-900">Acerca de nosotros</h2>
+          <p class="text-slate-600 leading-relaxed">
+            Guayaba Bit S.A.S. nació en Bogotá con ganas de web, nube y buena
+            actitud: acompañamos a equipos que quieren resultados sin perder el
+            sentido del humor. Lo de abajo son datos demo para la universidad.
+          </p>
+        </div>
+      </section>
+
+      <section class="bg-blue-100 border-t border-blue-200/60">
+        <div
+          class="max-w-3xl mx-auto px-4 py-14 md:py-16 text-center space-y-4"
+        >
+          <h2 class="text-2xl md:text-3xl font-bold text-slate-900">
+            ¿Listo para empezar?
+          </h2>
+          <p class="text-slate-700 text-lg leading-relaxed">
+            Contáctanos hoy mismo para obtener una consulta gratuita.
+          </p>
+          <div class="pt-2">
+            <a
+              href="contact.html"
+              class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-md bg-violet-500 text-white font-semibold shadow-sm hover:bg-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-blue-100"
+            >
+              <i
+                class="ti ti-mail text-xl leading-none shrink-0"
+                aria-hidden="true"
+              ></i>
+              Ir a contacto
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-slate-900 text-white shrink-0 mt-auto">
+      <div class="max-w-6xl mx-auto px-4 py-10 text-center space-y-3 text-sm">
+        <p class="text-slate-100">
+          © 2026 Guayaba Bit S.A.S. Todos los derechos reservados.
+        </p>
+        <p class="text-slate-300">
+          Carrera 11 #82-01, Oficina 1405 · Chapinero Norte · Bogotá D.C. ·
+          Colombia
+        </p>
+        <p class="text-slate-300">
+          Tel.
+          <a
+            href="tel:+576017943062"
+            class="hover:text-white underline-offset-2 hover:underline"
+            >+57 601 794 3062</a
+          >
+          ·
+          <a
+            href="mailto:hola@guayababit.co"
+            class="hover:text-white underline-offset-2 hover:underline"
+            >hola@guayababit.co</a
+          >
+        </p>
+        <p class="pt-4 border-t border-slate-800">
+          <a
+            href="admin/services.html"
+            class="text-slate-500 hover:text-slate-300 text-xs"
+            >Administración de servicios</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <script src="../js/store/storage.js"></script>
+    <script src="../js/store/initial-data.js"></script>
+    <script src="../js/store/services.js"></script>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+    <script src="../js/pages/home.js"></script>
+  </body>
+</html>

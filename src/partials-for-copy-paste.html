@@ -1,0 +1,159 @@
+<!--
+  Copy-paste reference to build pages.
+-->
+
+<!-- PAGE BOILERPLATE — same <head> for every page (adjust title and script paths) -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guayaba Bit — Página</title>
+    <link rel="icon" href="../../assets/favicon.ico" />
+    <!-- adjust depth: ../../ from src/pages/, ../../../ from src/pages/services/ or admin/ -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: { DEFAULT: "#2563eb", dark: "#1d4ed8" },
+            },
+          },
+        },
+      };
+    </script>
+    <!-- Tabler Icons webfont — https://tabler.io/icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.26.0/dist/tabler-icons.min.css"
+    />
+  </head>
+  <body class="min-h-screen flex flex-col bg-slate-50 font-sans">
+    <!-- header here -->
+
+    <main class="flex-1">
+      <!-- page content here -->
+    </main>
+
+    <!-- footer here -->
+
+    <!-- Scripts — adjust paths based on folder depth -->
+    <script src="../js/store/storage.js"></script>
+    <script src="../js/store/initial-data.js"></script>
+    <script src="../js/store/services.js"></script>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+    <script src="../js/pages/your-page.js"></script>
+  </body>
+</html>
+
+<!-- HEADER — pages at src/pages/ level -->
+<!-- Mark the current page with: class="... bg-slate-800 text-white" aria-current="page" -->
+<header class="bg-slate-900 text-white shrink-0">
+  <div
+    class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3"
+  >
+    <a href="home.html" class="text-lg font-bold text-white tracking-tight"
+      >Guayaba Bit</a
+    >
+    <nav class="flex flex-wrap items-center gap-1" aria-label="Principal">
+      <a
+        href="home.html"
+        class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+        >Inicio</a
+      >
+      <a
+        href="services/index.html"
+        class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+        >Servicios</a
+      >
+      <a
+        href="favorites.html"
+        class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+        >Favoritos</a
+      >
+      <a
+        href="contact.html"
+        class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+        >Contacto</a
+      >
+      <a
+        href="admin/services.html"
+        class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+        >Administrar</a
+      >
+    </nav>
+  </div>
+</header>
+
+<!-- HEADER — pages inside src/pages/services/ -->
+<header class="bg-slate-900 text-white shrink-0">
+  <div
+    class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3"
+  >
+    <a href="../home.html" class="text-lg font-bold text-white tracking-tight"
+      >Guayaba Bit</a
+    >
+    <nav class="flex flex-wrap items-center gap-1" aria-label="Principal">
+      <a
+        href="../home.html"
+        class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+        >Inicio</a
+      >
+      <a
+        href="index.html"
+        class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+        >Servicios</a
+      >
+      <a
+        href="../favorites.html"
+        class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+        >Favoritos</a
+      >
+      <a
+        href="../contact.html"
+        class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+        >Contacto</a
+      >
+      <a
+        href="../admin/services.html"
+        class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80"
+        >Administrar</a
+      >
+    </nav>
+  </div>
+</header>
+
+<!-- FOOTER — same for all pages (adjust the last link per page if needed) -->
+<footer class="bg-slate-900 text-white shrink-0 mt-auto">
+  <div class="max-w-6xl mx-auto px-4 py-10 text-center space-y-3 text-sm">
+    <p class="text-slate-100">
+      © 2026 Guayaba Bit S.A.S. Todos los derechos reservados.
+    </p>
+    <p class="text-slate-300">
+      Carrera 11 #82-01, Oficina 1405 · Chapinero Norte · Bogotá D.C. · Colombia
+    </p>
+    <p class="text-slate-300">
+      Tel.
+      <a
+        href="tel:+576017943062"
+        class="hover:text-white underline-offset-2 hover:underline"
+        >+57 601 794 3062</a
+      >
+      ·
+      <a
+        href="mailto:hola@guayababit.co"
+        class="hover:text-white underline-offset-2 hover:underline"
+        >hola@guayababit.co</a
+      >
+    </p>
+    <p class="pt-4 border-t border-slate-800">
+      <a
+        href="admin/services.html"
+        class="text-slate-500 hover:text-slate-300 text-xs"
+        >Administración de servicios</a
+      >
+    </p>
+  </div>
+</footer>
