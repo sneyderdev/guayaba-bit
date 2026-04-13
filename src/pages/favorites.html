@@ -5,8 +5,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guayaba Bit — Favoritos</title>
     <link rel="icon" href="../../assets/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: { DEFAULT: "#2563eb", dark: "#1d4ed8" },
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.26.0/dist/tabler-icons.min.css"
+    />
   </head>
-  <body>
-    <!-- Team: build the favorites page here. See src/partials-for-copy-paste.html to get started. -->
+
+  <body class="min-h-screen flex flex-col bg-slate-50 font-sans">
+    <header class="bg-slate-900 text-white shrink-0">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+        <a href="home.html" class="text-lg font-bold text-white tracking-tight">Guayaba Bit</a>
+        <nav class="flex flex-wrap items-center gap-1" aria-label="Principal">
+          <a href="home.html"
+            class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80">Inicio</a>
+          <a href="services/index.html"
+            class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80">Servicios</a>
+          <a href="favorites.html"
+            class="px-3 py-2 rounded-md text-sm font-medium bg-slate-800 text-white" aria-current="page">Favoritos</a>
+          <a href="contact.html"
+            class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80">Contacto</a>
+          <a href="admin/services.html"
+            class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80">Administrar</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-grow container mx-auto px-6 py-12 md:py-16 max-w-5xl">
+      <div class="flex items-baseline gap-3 mb-8">
+        <h1 class="text-2xl font-bold text-slate-900">Mis favoritos</h1>
+        <span id="favorites-count" class="text-sm text-slate-500"></span>
+      </div>
+
+      <!-- Estado vacío -->
+      <div id="empty-state" class="hidden text-center py-20 space-y-3">
+        <i class="ti ti-heart-off text-5xl text-slate-300"></i>
+        <p class="font-semibold text-slate-700">Aún no tienes favoritos</p>
+        <p class="text-slate-500 text-sm">Explora los servicios y guarda los que te interesen.</p>
+        <a href="services/index.html"
+          class="inline-flex items-center gap-2 mt-2 px-6 py-2 rounded-md bg-blue-500 text-white text-sm font-semibold hover:bg-blue-600">
+          <i class="ti ti-arrow-right"></i> Ver servicios
+        </a>
+      </div>
+
+      <!-- Grid de tarjetas -->
+      <div id="favorites-grid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      </div>
+    </main>
+
+    <footer class="bg-slate-900 text-white shrink-0 mt-auto">
+      <div class="max-w-6xl mx-auto px-4 py-10 text-center space-y-3 text-sm">
+        <p class="text-slate-100">© 2026 Guayaba Bit S.A.S. Todos los derechos reservados.</p>
+        <p class="text-slate-300">
+          Carrera 11 #82-01, Oficina 1405 · Chapinero Norte · Bogotá D.C. · Colombia
+        </p>
+        <p class="text-slate-300">
+          Tel.
+          <a href="tel:+576017943062"
+            class="hover:text-white underline-offset-2 hover:underline">+57 601 794 3062</a>
+          ·
+          <a href="mailto:hola@guayababit.co"
+            class="hover:text-white underline-offset-2 hover:underline">hola@guayababit.co</a>
+        </p>
+        <p class="pt-4 border-t border-slate-800">
+          <a href="admin/services.html"
+            class="text-slate-500 hover:text-slate-300 text-xs">Administración de servicios</a>
+        </p>
+      </div>
+    </footer>
+
+    <!-- Scripts: deben ir ANTES de cerrar body -->
+    <script src="../js/store/storage.js"></script>
+    <script src="../js/store/initial-data.js"></script>
+    <script src="../js/store/services.js"></script>
+    <script src="../js/store/favorites.js"></script>
+    <script>
+      function buildFavoriteCard(s) {
+        const imgHtml = s.image
+          ? `<div class="aspect-[16/10] bg-slate-100 overflow-hidden rounded-t-xl">
+               <img src="${s.image}" alt="" class="w-full h-full object-cover" loading="lazy" />
+             </div>`
+          : "";
+
+        return `
+          <div class="bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col">
+            ${imgHtml}
+            <div class="p-5 flex flex-col gap-3 flex-1">
+              <span class="text-xs font-semibold uppercase tracking-wide text-emerald-600">${s.category ?? ""}</span>
+              <h3 class="font-semibold text-slate-900 text-lg leading-snug">${s.title}</h3>
+              <p class="text-slate-500 text-sm flex-1">${s.shortDescription ?? ""}</p>
+              <p class="text-slate-800 font-bold text-sm">${s.priceLabel ?? ""}</p>
+              <div class="pt-1 flex flex-col gap-2">
+                <button
+                  class="favorite-btn inline-flex items-center gap-1 text-sm text-red-500 hover:text-red-700 transition-colors"
+                  data-service-id="${s.id}"
+                  title="Quitar de favoritos"
+                >
+                  <i class="ti ti-heart-filled text-base"></i>
+                  <span>Quitar de favoritos</span>
+                </button>
+                <a href="services/detail.html?id=${encodeURIComponent(s.id)}"
+                  class="inline-flex justify-center w-full px-4 py-2 rounded-md bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-600">
+                  Ver más
+                </a>
+              </div>
+            </div>
+          </div>`;
+      }
+
+      function renderFavorites() {
+  const grid    = document.getElementById("favorites-grid");
+  const empty   = document.getElementById("empty-state");
+  const counter = document.getElementById("favorites-count");
+  const items   = loadFavoriteServices();
+
+  const n = items.length;
+  counter.textContent = n
+    ? `${n} servicio${n !== 1 ? "s" : ""} guardado${n !== 1 ? "s" : ""}`
+    : "";
+
+  if (n === 0) {
+    grid.innerHTML = "";
+    empty.classList.remove("hidden");
+    return;
+  }
+
+  empty.classList.add("hidden");
+  grid.innerHTML = items.map(buildFavoriteCard).join("");
+
+}
+
+      document.addEventListener("DOMContentLoaded", renderFavorites);
+    </script>
   </body>
 </html>
