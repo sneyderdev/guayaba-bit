@@ -4,9 +4,163 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guayaba Bit — Servicios</title>
-    <link rel="icon" href="../../../assets/favicon.ico" />
+    <link rel="icon" href="../../assets/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: { DEFAULT: "#2563eb", dark: "#1d4ed8" },
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.26.0/dist/tabler-icons.min.css"
+    />
   </head>
-  <body>
-    <!-- Team: build the services list page here. See src/partials-for-copy-paste.html to get started. -->
+
+  <body class="min-h-screen flex flex-col bg-slate-50 font-sans">
+    <header class="bg-slate-900 text-white shrink-0">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+        <a href="../home.html" class="text-lg font-bold text-white tracking-tight">Guayaba Bit</a>
+        <nav class="flex flex-wrap items-center gap-1" aria-label="Principal">
+          <a href="../home.html"
+            class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80">Inicio</a>
+          <a href="services/index.html"
+            class="px-3 py-2 rounded-md text-sm font-medium bg-slate-800 text-white" aria-current="page">Servicios</a>
+          <a href="../favorites.html"
+            class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80">Favoritos</a>
+          <a href="../contact.html"
+            class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80">Contacto</a>
+          <a href="../admin/services.html"
+            class="px-3 py-2 rounded-md text-sm font-medium text-slate-200 hover:text-white hover:bg-slate-800/80">Administrar</a>
+        </nav>
+      </div>
+    </header>
+
+<main class="flex-1 max-w-6xl mx-auto px-4 py-12 w-full">
+  <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-slate-900">Servicios</h1>
+    <!-- Filtro por categoría -->
+    <select id="category-filter"
+      class="px-3 py-2 rounded-md border border-slate-300 text-sm text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <option value="">Todas las categorías</option>
+    </select>
+  </div>
+
+  <div id="services-grid"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  </div>
+
+  <div id="empty-state" class="hidden text-center py-20 space-y-3">
+    <i class="ti ti-mood-empty text-5xl text-slate-300"></i>
+    <p class="font-semibold text-slate-700">No hay servicios en esta categoría</p>
+  </div>
+</main>
+
+<script>
+  function buildServiceCard(s) {
+    const imgHtml = s.image
+      ? `<div class="aspect-[16/10] bg-slate-100 overflow-hidden">
+           <img src="${s.image}" alt="" class="w-full h-full object-cover" loading="lazy" />
+         </div>`
+      : "";
+
+    const fav = isFavorite(s.id);
+
+    return `
+      <article class="rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col h-full">
+        ${imgHtml}
+        <div class="p-5 flex flex-col gap-3 flex-1">
+          <p class="text-xs font-semibold uppercase tracking-wide text-emerald-600">${s.category ?? ""}</p>
+          <h3 class="text-lg font-bold text-slate-900">${s.title}</h3>
+          <p class="text-slate-600 text-sm leading-relaxed flex-1 line-clamp-3">${s.shortDescription ?? ""}</p>
+          <p class="text-sm font-medium text-slate-800">${s.priceLabel ?? ""}</p>
+          <div class="pt-1 flex flex-col gap-2">
+            <button
+              class="favorite-btn inline-flex items-center gap-1 text-sm ${fav ? "text-red-500" : "text-slate-400"} hover:text-red-500 transition-colors"
+              data-service-id="${s.id}"
+              aria-pressed="${fav}"
+              title="${fav ? "Quitar de favoritos" : "Agregar a favoritos"}"
+            >
+              <i class="ti ${fav ? "ti-heart-filled" : "ti-heart"} text-base"></i>
+              <span>${fav ? "En favoritos" : "Agregar a favoritos"}</span>
+            </button>
+            <a href="detail.html?id=${encodeURIComponent(s.id)}"
+              class="inline-flex justify-center w-full px-4 py-2 rounded-md bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+              Ver más
+            </a>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function renderServices(filterCategory = "") {
+    const grid  = document.getElementById("services-grid");
+    const empty = document.getElementById("empty-state");
+    const all   = loadAllServices();
+
+    const items = filterCategory
+      ? all.filter(s => s.category === filterCategory)
+      : all;
+
+    if (items.length === 0) {
+      grid.innerHTML = "";
+      empty.classList.remove("hidden");
+      return;
+    }
+
+    empty.classList.add("hidden");
+    grid.innerHTML = items.map(buildServiceCard).join("");
+  }
+
+  function populateFilter() {
+    const select = document.getElementById("category-filter");
+    const categories = [...new Set(loadAllServices().map(s => s.category).filter(Boolean))];
+    categories.forEach(cat => {
+      const opt = document.createElement("option");
+      opt.value = cat;
+      opt.textContent = cat;
+      select.appendChild(opt);
+    });
+
+    select.addEventListener("change", () => renderServices(select.value));
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    populateFilter();
+    renderServices();
+  });
+</script>
+
+    <footer class="bg-slate-900 text-white shrink-0 mt-auto">
+      <div class="max-w-6xl mx-auto px-4 py-10 text-center space-y-3 text-sm">
+        <p class="text-slate-100">© 2026 Guayaba Bit S.A.S. Todos los derechos reservados.</p>
+        <p class="text-slate-300">
+          Carrera 11 #82-01, Oficina 1405 · Chapinero Norte · Bogotá D.C. · Colombia
+        </p>
+        <p class="text-slate-300">
+          Tel.
+          <a href="tel:+576017943062"
+            class="hover:text-white underline-offset-2 hover:underline">+57 601 794 3062</a>
+          ·
+          <a href="mailto:hola@guayababit.co"
+            class="hover:text-white underline-offset-2 hover:underline">hola@guayababit.co</a>
+        </p>
+        <p class="pt-4 border-t border-slate-800">
+          <a href="admin/services.html"
+            class="text-slate-500 hover:text-slate-300 text-xs">Administración de servicios</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="../../js/store/storage.js"></script>
+    <script src="../../js/store/initial-data.js"></script>
+    <script src="../../js/store/services.js"></script>
+    <script src="../../js/store/favorites.js"></script>
   </body>
 </html>
