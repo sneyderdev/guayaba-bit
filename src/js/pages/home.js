@@ -15,6 +15,18 @@ const buildFeaturedCard = (service) => {
       ? `<p class="text-sm font-medium text-slate-800">${service.priceLabel}</p>`
       : "";
 
+  const fav = isFavorite(service.id);
+  const favBtn = `
+    <button
+      class="favorite-btn inline-flex items-center gap-1 text-sm ${fav ? "text-red-500" : "text-slate-400"} hover:text-red-500 transition-colors"
+      data-service-id="${service.id}"
+      aria-pressed="${fav}"
+      title="${fav ? "Quitar de favoritos" : "Agregar a favoritos"}"
+    >
+      <i class="ti ${fav ? "ti-heart-filled" : "ti-heart"} text-base"></i>
+      <span>${fav ? "En favoritos" : "Agregar a favoritos"}</span>
+    </button>`;
+
   return `
     <article class="rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden flex flex-col h-full">
       ${imgHtml}
@@ -23,7 +35,8 @@ const buildFeaturedCard = (service) => {
         <h3 class="text-lg font-bold text-slate-900">${service.title}</h3>
         <p class="text-slate-600 text-sm leading-relaxed flex-1 line-clamp-3">${service.shortDescription}</p>
         ${price}
-        <div class="pt-1">
+        <div class="pt-1 flex flex-col gap-2">
+          ${favBtn}
           <a href="${detailHref}" class="inline-flex justify-center w-full px-4 py-2 rounded-md bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">Ver más</a>
         </div>
       </div>
@@ -40,7 +53,6 @@ $(function () {
     $grid.html(
       '<p class="text-slate-600 col-span-full text-center">No hay servicios en el catálogo.</p>',
     );
-
     return;
   }
 
