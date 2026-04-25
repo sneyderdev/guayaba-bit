@@ -1,59 +1,88 @@
-# AngularApp
+# Guayaba Bit — Angular app
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+Angular 21 migration of the vanilla site under [`../vanilla/`](../vanilla/). Same `localStorage` schema, so both stacks share data when run on the same origin.
 
-## Development server
+## Stack
 
-To start a local development server, run:
+- Angular 21 (standalone components, signals, new control flow `@if` / `@for`)
+- Tailwind CSS v4 via `@tailwindcss/postcss`
+- Tabler Icons (CDN)
+- Template-driven forms (`[(ngModel)]`)
+- No SSR — data layer is `localStorage` only
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Run
 
 ```bash
-ng generate component component-name
+npm install
+npm start          # http://localhost:4200
+npm run build      # output: dist/angular-app
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Routes
 
-```bash
-ng generate --help
+| Path                | Component                  | Status                                                  |
+| ------------------- | -------------------------- | ------------------------------------------------------- |
+| `/`                 | `HomeComponent`            | ✅ Migrated                                             |
+| `/admin/services`   | `AdminServicesComponent`   | ✅ Migrated                                             |
+| `/services`         | `PlaceholderComponent`     | ⏳ Placeholder — points to `vanilla/src/pages/services/index.html`  |
+| `/services/:id`     | `PlaceholderComponent`     | ⏳ Placeholder — points to `vanilla/src/pages/services/detail.html` |
+| `/favorites`        | `PlaceholderComponent`     | ⏳ Placeholder — points to `vanilla/src/pages/favorites.html`       |
+| `/contact`          | `PlaceholderComponent`     | ⏳ Placeholder — points to `vanilla/src/pages/contact.html`         |
+
+## Project layout
+
+```
+src/app/
+  app.ts, app.config.ts, app.routes.ts
+  core/
+    service.model.ts          — Service interface
+    storage.ts                — readStoredJson / writeStoredJson
+    initial-services.ts       — seed data (same as vanilla)
+    services-store.ts         — signal store, key "services"
+    favorites-store.ts        — signal store, key "favorites"
+  shared/
+    layout/                   — header, footer, <router-outlet>
+    service-card/             — featured/list card
+    favorite-button/          — heart toggle, reactive across the app
+  pages/
+    home/                     — featured grid
+    admin-services/           — template-driven form + list
+    placeholder/              — generic stub for unmigrated routes
 ```
 
-## Building
+## Data layer
 
-To build the project run:
+`ServicesStore` and `FavoritesStore` are root-provided injectable services backed by Angular signals. They read from / write to the same `localStorage` keys as the vanilla app:
 
-```bash
-ng build
+- `services` — full catalog (seeded from `INITIAL_SERVICES` on first load if missing/empty)
+- `favorites` — array of service IDs
+
+Because the schema is identical, you can switch between the vanilla site and the Angular app on the same origin and your data follows you.
+
+## Migrating a placeholder page
+
+1. Create a component under `src/app/pages/<page>/`.
+2. Inject the relevant store: `inject(ServicesStore)` or `inject(FavoritesStore)`.
+3. Replace the placeholder entry in [`src/app/app.routes.ts`](src/app/app.routes.ts) with your component.
+4. Reuse [`ServiceCardComponent`](src/app/shared/service-card/service-card.component.ts) and [`FavoriteButtonComponent`](src/app/shared/favorite-button/favorite-button.component.ts) instead of re-implementing the markup.
+5. For the detail page: the `:id` route param auto-binds to a component `id = input.required<string>()` — `withComponentInputBinding()` is enabled in [`app.config.ts`](src/app/app.config.ts).
+
+Useful store API:
+
+```ts
+// Services
+store.services()                  // signal: Service[]
+store.findById(id)                // Service | undefined
+store.addService(svc)
+store.deleteServiceById(id)
+
+// Favorites
+favorites.ids()                   // signal: string[]
+favorites.isFavorite(id)
+favorites.isFavoriteSignal(id)    // computed signal for templates
+favorites.toggle(id)
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Deploy (Vercel)
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+A `vercel.json` SPA rewrite is included. When you create the Vercel project, set **Root Directory = `angular-app/`** and Vercel will auto-detect Angular and run `ng build`.
