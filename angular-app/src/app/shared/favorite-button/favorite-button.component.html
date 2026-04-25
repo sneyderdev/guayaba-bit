@@ -1,0 +1,18 @@
+<button
+  type="button"
+  (click)="toggle()"
+  [attr.aria-pressed]="isFavorite()"
+  [title]="isFavorite() ? 'Quitar de favoritos' : 'Agregar a favoritos'"
+  [class]="
+    'inline-flex items-center gap-1 text-sm hover:text-red-500 transition-colors ' +
+    (isFavorite() ? 'text-red-500' : 'text-slate-400')
+  "
+>
+  @if (isFavorite()) {
+    <i class="ti ti-heart-filled text-base" aria-hidden="true"></i>
+    <span>En favoritos</span>
+  } @else {
+    <i class="ti ti-heart text-base" aria-hidden="true"></i>
+    <span>Agregar a favoritos</span>
+  }
+</button>
