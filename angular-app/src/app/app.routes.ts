@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { AdminServicesComponent } from './pages/admin-services/admin-services.component';
 import { PlaceholderComponent } from './pages/placeholder/placeholder.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 export const routes: Routes = [
   {
@@ -36,7 +37,7 @@ export const routes: Routes = [
   },
   {
     path: 'contact',
-    component: PlaceholderComponent,
+    component: ContactComponent,
     title: 'Guayaba Bit — Contacto',
     data: { title: 'Contacto', vanillaPath: 'src/pages/contact.html' },
   },

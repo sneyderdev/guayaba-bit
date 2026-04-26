@@ -14,6 +14,6 @@ Two siblings live in this repo:
 | Services list       | ✅      | ⏳      |
 | Service detail      | ✅      | ⏳      |
 | Favorites           | ✅      | ⏳      |
-| Contact             | ✅      | ⏳      |
+| Contact             | ✅      | ✅      |
 
 Pages marked ⏳ render a placeholder in the Angular app pointing to the corresponding vanilla page.
