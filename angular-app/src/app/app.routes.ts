@@ -4,6 +4,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { AdminServicesComponent } from './pages/admin-services/admin-services.component';
 import { PlaceholderComponent } from './pages/placeholder/placeholder.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { FavoritesComponent } from './pages/favorites/favorites.component';
+import { ServicesComponent } from './pages/services/services.component';
 
 export const routes: Routes = [
   {
@@ -19,7 +21,7 @@ export const routes: Routes = [
   },
   {
     path: 'services',
-    component: PlaceholderComponent,
+    component: ServicesComponent,
     title: 'Guayaba Bit — Servicios',
     data: { title: 'Servicios', vanillaPath: 'src/pages/services/index.html' },
   },
@@ -30,11 +32,11 @@ export const routes: Routes = [
     data: { title: 'Detalle del servicio', vanillaPath: 'src/pages/services/detail.html' },
   },
   {
-    path: 'favorites',
-    component: PlaceholderComponent,
-    title: 'Guayaba Bit — Favoritos',
-    data: { title: 'Favoritos', vanillaPath: 'src/pages/favorites.html' },
-  },
+  path: 'favorites',
+  component: FavoritesComponent,
+  title: 'Guayaba Bit — Favoritos',
+  data: { title: 'Favoritos', vanillaPath: 'src/pages/favorites.html' },
+},
   {
     path: 'contact',
     component: ContactComponent,

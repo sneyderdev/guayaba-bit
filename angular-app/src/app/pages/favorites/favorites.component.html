@@ -1,0 +1,23 @@
+<section class="max-w-5xl mx-auto px-4 py-10">
+  <h1 class="text-3xl font-bold text-slate-900 mb-2">Mis favoritos</h1>
+  <p class="text-slate-500 mb-8">Los servicios que guardaste para consultar después.</p>
+
+  @if (favoriteServices().length === 0) {
+    <div class="flex flex-col items-center justify-center py-24 text-center gap-4">
+      <i class="ti ti-heart-off text-5xl text-slate-300"></i>
+      <p class="text-slate-500 text-lg">Aún no tienes favoritos guardados.</p>
+      <a
+        routerLink="/services"
+        class="mt-2 inline-flex px-5 py-2 rounded-md bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-600 transition-colors"
+      >
+        Explorar servicios
+      </a>
+    </div>
+  } @else {
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      @for (service of favoriteServices(); track service.id) {
+        <app-service-card [service]="service" />
+      }
+    </div>
+  }
+</section>
