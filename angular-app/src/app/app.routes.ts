@@ -6,6 +6,7 @@ import { PlaceholderComponent } from './pages/placeholder/placeholder.component'
 import { ContactComponent } from './pages/contact/contact.component';
 import { FavoritesComponent } from './pages/favorites/favorites.component';
 import { ServicesComponent } from './pages/services/services.component';
+import { ServiceDetailComponent } from './pages/service-detail/service-detail.component';
 
 export const routes: Routes = [
   {
@@ -27,7 +28,7 @@ export const routes: Routes = [
   },
   {
     path: 'services/:id',
-    component: PlaceholderComponent,
+    component: ServiceDetailComponent,
     title: 'Guayaba Bit — Detalle del servicio',
     data: { title: 'Detalle del servicio', vanillaPath: 'src/pages/services/detail.html' },
   },
