@@ -1,6 +1,6 @@
 # Guayaba Bit — Angular app
 
-Angular 21 migration of the vanilla site under [`../vanilla/`](../vanilla/). Same `localStorage` schema, so both stacks share data when run on the same origin.
+Angular 21 app, fully migrated from the vanilla site under [`../vanilla/`](../vanilla/). Same `localStorage` schema, so both stacks share data when run on the same origin.
 
 ## Stack
 
@@ -20,14 +20,14 @@ npm run build      # output: dist/angular-app
 
 ## Routes
 
-| Path                | Component                  | Status                                                  |
-| ------------------- | -------------------------- | ------------------------------------------------------- |
-| `/`                 | `HomeComponent`            | ✅ Migrated                                             |
-| `/admin/services`   | `AdminServicesComponent`   | ✅ Migrated                                             |
-| `/services`         | `PlaceholderComponent`     | ⏳ Placeholder — points to `vanilla/src/pages/services/index.html`  |
-| `/services/:id`     | `PlaceholderComponent`     | ⏳ Placeholder — points to `vanilla/src/pages/services/detail.html` |
-| `/favorites`        | `PlaceholderComponent`     | ⏳ Placeholder — points to `vanilla/src/pages/favorites.html`       |
-| `/contact`          | `PlaceholderComponent`     | ⏳ Placeholder — points to `vanilla/src/pages/contact.html`         |
+| Path                | Component                  |
+| ------------------- | -------------------------- |
+| `/`                 | `HomeComponent`            |
+| `/admin/services`   | `AdminServicesComponent`   |
+| `/services`         | `ServicesComponent`        |
+| `/services/:id`     | `ServiceDetailComponent`   |
+| `/favorites`        | `FavoritesComponent`       |
+| `/contact`          | `ContactComponent`         |
 
 ## Project layout
 
@@ -47,7 +47,10 @@ src/app/
   pages/
     home/                     — featured grid
     admin-services/           — template-driven form + list
-    placeholder/              — generic stub for unmigrated routes
+    services/                 — services list
+    service-detail/           — single service detail
+    favorites/                — saved favorites
+    contact/                  — contact form
 ```
 
 ## Data layer
@@ -59,15 +62,7 @@ src/app/
 
 Because the schema is identical, you can switch between the vanilla site and the Angular app on the same origin and your data follows you.
 
-## Migrating a placeholder page
-
-1. Create a component under `src/app/pages/<page>/`.
-2. Inject the relevant store: `inject(ServicesStore)` or `inject(FavoritesStore)`.
-3. Replace the placeholder entry in [`src/app/app.routes.ts`](src/app/app.routes.ts) with your component.
-4. Reuse [`ServiceCardComponent`](src/app/shared/service-card/service-card.component.ts) and [`FavoriteButtonComponent`](src/app/shared/favorite-button/favorite-button.component.ts) instead of re-implementing the markup.
-5. For the detail page: the `:id` route param auto-binds to a component `id = input.required<string>()` — `withComponentInputBinding()` is enabled in [`app.config.ts`](src/app/app.config.ts).
-
-Useful store API:
+## Store API
 
 ```ts
 // Services
