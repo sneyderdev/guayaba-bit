@@ -6,5 +6,6 @@ import { LayoutComponent } from './shared/layout/layout.component';
   selector: 'app-root',
   imports: [LayoutComponent],
   template: '<app-layout />',
+  styles: [':host { display: contents }'],
 })
 export class App {}
