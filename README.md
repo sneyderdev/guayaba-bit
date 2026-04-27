@@ -3,7 +3,7 @@
 Two siblings live in this repo:
 
 - [`vanilla/`](vanilla/) — original site built with HTML, Tailwind (CDN), jQuery, and `localStorage`. See [vanilla/README.md](vanilla/README.md).
-- [`angular-app/`](angular-app/) — Angular 21 migration in progress. Same `localStorage` schema (keys `services` and `favorites`), so both stacks share data when run on the same origin. See [angular-app/README.md](angular-app/README.md).
+- [`angular-app/`](angular-app/) — Angular 21 app, fully migrated from vanilla. Same `localStorage` schema (keys `services` and `favorites`), so both stacks share data when run on the same origin. See [angular-app/README.md](angular-app/README.md).
 
 ## Migration status
 
@@ -11,9 +11,7 @@ Two siblings live in this repo:
 | ------------------- | ------- | ------- |
 | Home (dashboard)    | ✅      | ✅      |
 | Admin — services    | ✅      | ✅      |
-| Services list       | ✅      | ⏳      |
-| Service detail      | ✅      | ⏳      |
-| Favorites           | ✅      | ⏳      |
+| Services list       | ✅      | ✅      |
+| Service detail      | ✅      | ✅      |
+| Favorites           | ✅      | ✅      |
 | Contact             | ✅      | ✅      |
-
-Pages marked ⏳ render a placeholder in the Angular app pointing to the corresponding vanilla page.
